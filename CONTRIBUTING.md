@@ -189,7 +189,8 @@ Subject line: imperative, lowercase, no trailing period, ≤ 72 characters.
 
 Examples: `feat/calendar-month-view`, `fix/voice-permission-fallback`, `docs/api-error-codes`.
 
-Never commit directly to `main`. It is protected and requires a pull request.
+Never push directly to `main`. Force-pushes and branch deletion are blocked at the repository
+level; changes normally land through a pull request, and `main` is merged squash-style.
 
 ---
 
