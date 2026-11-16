@@ -78,7 +78,7 @@ project is source-available — see [License](#license).
 | Releases | ✅ Configured, none published | `docs/RELEASING.md` + `.github/release.yml`; `v0.1.0` planned |
 | Private vulnerability reporting | ✅ Enabled | GitHub Security Advisories; referenced by `SECURITY.md` |
 | Issue/PR templates | ✅ Configured | See [Files created](#files-created) |
-| Branch protection | ✅ Configured after the final push | Force-pushes and branch deletion blocked on `main` |
+| Branch protection | ✅ Configured on `main` | Force-pushes and branch deletion blocked, admins included; conversation resolution required on PRs |
 | GitHub Pages / homepage | ❌ None | No site exists; nothing invented |
 
 ---
@@ -254,7 +254,19 @@ allow_merge_commit   false
 allow_rebase_merge   false
 delete_branch_on_merge true
 allow_auto_merge     true
+
+main protection
+  enforce_admins                     true
+  allow_force_pushes                 false
+  allow_deletions                    false
+  required_conversation_resolution   true
+  required_status_checks             none (see follow-up 1)
+  required_pull_request_reviews      none (solo maintainer; see note below)
 ```
+
+**Why no required reviews.** GitHub does not permit self-approval, so requiring an approving
+review would deadlock a single-maintainer repository. Reviews are mandatory by convention
+(`CONTRIBUTING.md`) and can be enforced the moment a second maintainer joins.
 
 ### Not verified (and why)
 
@@ -309,6 +321,8 @@ allow_auto_merge     true
 | 6 | Add a `dependabot.yml` once dependencies exist | Phase 0 |
 | 7 | Re-evaluate license wording with a lawyer before any commercial licensing conversation | Before enforcement is needed |
 | 8 | Publish the documentation site and set the repository homepage | After `v0.1.0` |
+| 9 | Require the `Repository Checks` workflow on `main` once the first green run is observed | Immediately after follow-up 1 |
+| 10 | If history ever must be rewritten (for example to purge a leaked secret), temporarily disable admin enforcement in **Settings → Branches**, then re-enable it | Only when needed |
 
 ---
 
