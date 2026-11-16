@@ -269,11 +269,27 @@ main protection
 review would deadlock a single-maintainer repository. Reviews are mandatory by convention
 (`CONTRIBUTING.md`) and can be enforced the moment a second maintainer joins.
 
+### CI
+
+| Run | Commit | Result |
+|---|---|---|
+| 43900686323 | `657aa76` initial commit | ❌ `Documentation integrity` |
+| 43901139687 | `05c2bfb` setup report | ❌ `Documentation integrity` |
+| 43901515080 | `5c78d33` branch policy | ❌ `Documentation integrity` |
+| 43902221700 | `f654890` banner + fix | ✅ all five jobs green |
+
+**What was wrong:** the link-check step ran under `set -euo pipefail`, so `grep -oE` finding no
+matches in a markdown file returned exit code 1, which `pipefail` turned into a failed step — the
+job failed for the *absence* of links, not the presence of broken ones. The shell pipeline was
+replaced with a Python walker (`114 relative links checked, 0 broken`) that also prints how
+many links it examined, so a silently-broken matcher cannot look like a pass.
+
+The remaining four jobs — structure, templates, secrets, application gates — passed on every run.
+
 ### Not verified (and why)
 
 | Item | Reason |
 |---|---|
-| CI run on GitHub | The workflow was pushed with the initial commit; its first run must be observed on the Actions tab. Nothing else can be asserted here. |
 | Rendered issue/PR templates | Templates render when a user opens the form; YAML validity is checked locally and in CI. |
 | Security advisory flow | Cannot be exercised without a real report — that would be dishonest to simulate. |
 | Screenshots, demo, deployment | Do not exist. Not claimed anywhere. |
@@ -314,7 +330,7 @@ review would deadlock a single-maintainer repository. Reviews are mandatory by c
 
 | # | Action | When |
 |---|---|---|
-| 1 | Watch the first CI run on the Actions tab and fix anything it surfaces | Now |
+| 1 | ~~Watch the first CI run and fix what it surfaces~~ — done: run `43902221700` is green | Complete |
 | 2 | Social preview image (1280×640, different ratio from the README banner): reuse the banner artwork with a centred lockup — upload under **Settings → Social preview** | Before the first public announcement |
 | 3 | Add repository labels matching `.github/release.yml` (`feature`, `bug`, `security`, `docs`, `dependencies`, `breaking-change`, …) | Before the first issue |
 | 4 | Add `CODEOWNERS` once more than one maintainer exists | With the first external contributor |
@@ -322,7 +338,7 @@ review would deadlock a single-maintainer repository. Reviews are mandatory by c
 | 6 | Add a `dependabot.yml` once dependencies exist | Phase 0 |
 | 7 | Re-evaluate license wording with a lawyer before any commercial licensing conversation | Before enforcement is needed |
 | 8 | Publish the documentation site and set the repository homepage | After `v0.1.0` |
-| 9 | Require the `Repository Checks` workflow on `main` once the first green run is observed | Immediately after follow-up 1 |
+| 9 | Require the `Repository Checks` workflow on `main` (the first green run has been observed) | Next settings pass |
 | 10 | If history ever must be rewritten (for example to purge a leaked secret), temporarily disable admin enforcement in **Settings → Branches**, then re-enable it | Only when needed |
 
 ---
