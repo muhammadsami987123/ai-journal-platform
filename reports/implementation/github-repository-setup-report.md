@@ -111,6 +111,7 @@ project is source-available — see [License](#license).
 | `pull_request_template.md` | Summary, linked issue, type/scope, verification, docs, security checklist |
 | `workflows/ci.yml` | Repository checks: structure, docs links, template validity, secrets scan |
 | `release.yml` | Release-note categorization by label |
+| `assets/banner.png` | 3200×1000 README hero banner (1600×500 design, exported at 2×) |
 
 ### `docs/`
 
@@ -314,7 +315,7 @@ review would deadlock a single-maintainer repository. Reviews are mandatory by c
 | # | Action | When |
 |---|---|---|
 | 1 | Watch the first CI run on the Actions tab and fix anything it surfaces | Now |
-| 2 | Social preview image (1280×640): title, one-line pitch, stack strip, "Source-available" mark — upload under **Settings → Social preview** | Before the first public announcement |
+| 2 | Social preview image (1280×640, different ratio from the README banner): reuse the banner artwork with a centred lockup — upload under **Settings → Social preview** | Before the first public announcement |
 | 3 | Add repository labels matching `.github/release.yml` (`feature`, `bug`, `security`, `docs`, `dependencies`, `breaking-change`, …) | Before the first issue |
 | 4 | Add `CODEOWNERS` once more than one maintainer exists | With the first external contributor |
 | 5 | Create the `v0.1.0` milestone from `docs/TASKS.md` phases 0–2 | Start of Phase 0 |

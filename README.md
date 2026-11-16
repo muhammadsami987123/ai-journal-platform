@@ -1,6 +1,8 @@
 <div align="center">
 
-# AI Journal
+<img src=".github/assets/banner.png" alt="AI Journal Platform — an AI-powered personal journaling platform for text, voice and mood" width="100%">
+
+# **AI Journal Platform**
 
 ### An AI-powered personal journaling platform for text and voice
 
@@ -693,7 +695,7 @@ then this repository is the single source of truth.
 
 <div align="center">
 
-**[⬆ Back to top](#ai-journal)**
+**[⬆ Back to top](#ai-journal-platform)**
 
 Built and specified by **Muhammad Sami** — a journaling habit worth keeping, made easier.
 

@@ -46,6 +46,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `tests/e2e` with `.gitkeep` placeholders; no source files yet.
 - **Repository documentation** — `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`,
   `SECURITY.md`, `CHANGELOG.md`, `.env.example`.
+- **Repository banner** — `.github/assets/banner.png`: a hand-authored HTML/CSS/SVG design rendered
+  at 1600×500 (2× export) and used as the README hero. No stock photography and no AI-generated
+  mockup of a UI that does not exist.
 - **GitHub configuration** — issue templates (bug, feature, improvement), pull request template,
   CI structure and secret-scan workflow, release-note categorization config.
 - **Implementation reports** — folder structure, stack migration and GitHub repository setup
