@@ -49,3 +49,6 @@ desktop.ini
 .cache/
 .temp/
 tmp/
+
+# Local tooling artifacts (Playwright MCP screenshots, traces)
+.playwright-mcp/
