@@ -1,0 +1,309 @@
+name: Repository Checks
+
+# This repository is in the architecture phase: there is no package.json, no lockfile and no
+# application source. Therefore this workflow intentionally does NOT run pnpm scripts or builds.
+# It validates what actually exists — layout, documentation integrity, templates and secrets.
+#
+# When Phase 0 lands (package.json + lockfile), extend the `application-gates` job; do not delete
+# the repository checks, they remain useful for docs-only pull requests.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repo-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  structure:
+    name: Structure & required files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Required root files are present
+        run: |
+          set -euo pipefail
+          required=(
+            README.md
+            LICENSE
+            CONTRIBUTING.md
+            CODE_OF_CONDUCT.md
+            SECURITY.md
+            CHANGELOG.md
+            .gitignore
+            .env.example
+          )
+          missing=0
+          for f in "${required[@]}"; do
+            if [ -f "$f" ]; then
+              echo "ok       $f"
+            else
+              echo "::error file=$f::Required file is missing"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+      - name: Documented architecture directories exist
+        run: |
+          set -euo pipefail
+          required=(
+            apps/api
+            apps/web
+            packages/shared
+            packages/database
+            packages/config
+            tests/e2e
+            docs
+            reports
+          )
+          missing=0
+          for d in "${required[@]}"; do
+            if [ -d "$d" ]; then
+              echo "ok       $d/"
+            else
+              echo "::error file=$d::Documented directory is missing"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+      - name: Placeholders hold no application source
+        run: |
+          set -euo pipefail
+          # Sanity guard: the scaffolding phase should not contain source files yet.
+          # This check is informational once real code exists; it must not block Phase 0.
+          count=$(find apps packages tests -type f \
+            \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) 2>/dev/null | wc -l)
+          echo "Source files found: $count"
+          if [ "$count" -eq 0 ]; then
+            echo "Scaffolding intact — no application source yet."
+          else
+            echo "::notice::Application source detected ($count files). Remove or relax this check as part of Phase 0."
+          fi
+
+  docs:
+    name: Documentation integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check relative links resolve
+        run: |
+          set -euo pipefail
+          fail=0
+          # Scan markdown outside node_modules; check only relative links and anchors-free paths.
+          while IFS= read -r file; do
+            dir=$(dirname "$file")
+            # Extract targets of the form [text](target) or [text](target#frag)
+            grep -oE '\]\([^) ]+\)' "$file" 2>/dev/null \
+              | sed -E 's/^\]\(//; s/\)$//' \
+              | while IFS= read -r target; do
+                  case "$target" in
+                    http://*|https://*|mailto:*|tel:*|"#"*|\#*) continue ;;
+                  esac
+                  path="${target%%#*}"
+                  [ -z "$path" ] && continue
+                  if [ ! -e "$dir/$path" ] && [ ! -e "$path" ]; then
+                    echo "::error file=$file::Broken relative link: $target"
+                    echo "BROKEN" >> /tmp/link-failures
+                  fi
+                done
+          done < <(find . -name '*.md' -not -path './node_modules/*' -not -path './.git/*')
+
+          if [ -f /tmp/link-failures ]; then
+            echo "Broken links detected."
+            exit 1
+          fi
+          echo "All relative markdown links resolve."
+
+      - name: No tab characters in markdown code fences
+        run: |
+          set -euo pipefail
+          # Trailing-whitespace and stray-tab noise makes review diffs worse; keep it out.
+          if grep -rnP '[ \t]+$' --include='*.md' . 2>/dev/null | grep -v '^./.git/' | head -n 20; then
+            echo "::warning::Trailing whitespace found in markdown (not fatal)."
+          fi
+
+  templates:
+    name: GitHub templates & configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate YAML syntax
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(.github/ISSUE_TEMPLATE/*.yml .github/*.yml .github/workflows/*.yml .github/workflows/*.yaml)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "::error::No GitHub YAML configuration found"
+            exit 1
+          fi
+          if ! python3 -c "import yaml" 2>/dev/null; then
+            echo "::notice::PyYAML unavailable on this runner — skipping YAML parse."
+            exit 0
+          fi
+          fail=0
+          for f in "${files[@]}"; do
+            if python3 -c "import sys, yaml; yaml.safe_load(open(sys.argv[1], encoding='utf-8'))" "$f"; then
+              echo "ok       $f"
+            else
+              echo "::error file=$f::Invalid YAML"
+              fail=1
+            fi
+          done
+          exit "$fail"
+
+      - name: Issue templates are well formed
+        run: |
+          set -euo pipefail
+          if ! python3 -c "import yaml" 2>/dev/null; then
+            echo "::notice::PyYAML unavailable — skipping issue template schema checks."
+            exit 0
+          fi
+          python3 - <<'PY'
+          import glob
+          import sys
+          import yaml
+
+          failures = 0
+          for path in sorted(glob.glob(".github/ISSUE_TEMPLATE/*.yml")):
+              if path.endswith("config.yml"):
+                  continue
+              with open(path, encoding="utf-8") as fh:
+                  data = yaml.safe_load(fh)
+              if not isinstance(data, dict):
+                  print(f"::error file={path}::Template is not a mapping")
+                  failures += 1
+                  continue
+              for key in ("name", "description", "body"):
+                  if key not in data:
+                      print(f"::error file={path}::Missing required key '{key}'")
+                      failures += 1
+              body = data.get("body") or []
+              if not isinstance(body, list) or not body:
+                  print(f"::error file={path}::'body' must be a non-empty list")
+                  failures += 1
+                  continue
+              for i, item in enumerate(body):
+                  if not isinstance(item, dict) or "type" not in item or "attributes" not in item:
+                      print(f"::error file={path}::body[{i}] needs 'type' and 'attributes'")
+                      failures += 1
+              print(f"ok       {path} ({len(body)} elements)")
+          sys.exit(1 if failures else 0)
+          PY
+
+  secrets:
+    name: Secrets scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: No committed environment files
+        run: |
+          set -euo pipefail
+          # .env.example is the only permitted environment file.
+          bad=$(find . -type f \( -name '.env' -o -name '.env.*' \) \
+            -not -path './.git/*' -not -name '.env.example' || true)
+          if [ -n "$bad" ]; then
+            echo "::error::Environment file committed. Secrets must never be tracked."
+            echo "$bad"
+            exit 1
+          fi
+          echo "No committed .env files."
+
+      - name: Scan for credential patterns
+        run: |
+          set -euo pipefail
+          patterns=(
+            'AKIA[0-9A-Z]{16}'
+            'ghp_[A-Za-z0-9]{36}'
+            'gho_[A-Za-z0-9]{36}'
+            'github_pat_[A-Za-z0-9_]{22,}'
+            'sk-[A-Za-z0-9]{20,}'
+            '-----BEGIN [A-Z ]*PRIVATE KEY-----'
+            'postgres(ql)?://[^[:space:]/]+:[^[:space:]/@]+@'
+          )
+          fail=0
+          for p in "${patterns[@]}"; do
+            if grep -rInE --binary-files=without-match "$p" . \
+                 --exclude-dir=.git --exclude='*.md' --exclude='*.example' 2>/dev/null; then
+              echo "::error::Possible secret matching pattern: $p"
+              fail=1
+            fi
+          done
+          if [ "$fail" -ne 0 ]; then
+            exit 1
+          fi
+          echo "No credential patterns detected."
+
+  application-gates:
+    name: Application gates (activates at Phase 0)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect whether the workspace exists yet
+        id: detect
+        run: |
+          if [ -f package.json ] && [ -f pnpm-lock.yaml ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No package.json/pnpm-lock.yaml yet — lint, typecheck, test and build are skipped by design."
+          fi
+
+      - name: Skip notice
+        if: steps.detect.outputs.ready == 'false'
+        run: |
+          echo "### Application gates skipped" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "The monorepo foundation has not been created yet. Once Phase 0 adds a root" >> "$GITHUB_STEP_SUMMARY"
+          echo "\`package.json\` and \`pnpm-lock.yaml\`, this job runs lint, typecheck, test and build." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Setup pnpm
+        if: steps.detect.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        if: steps.detect.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        if: steps.detect.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        if: steps.detect.outputs.ready == 'true'
+        run: pnpm lint
+
+      - name: Typecheck
+        if: steps.detect.outputs.ready == 'true'
+        run: pnpm typecheck
+
+      - name: Test
+        if: steps.detect.outputs.ready == 'true'
+        run: pnpm test
+
+      - name: Build
+        if: steps.detect.outputs.ready == 'true'
+        run: pnpm build

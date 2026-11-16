@@ -1,0 +1,61 @@
+# Release-note categorization. Applies to GitHub's auto-generated release notes only.
+# Curated release notes (see docs/RELEASING.md) take precedence and normally override this.
+#
+# Label rules are evaluated top-down but GitHub merges all matches, so keep categories
+# mutually exclusive where possible to avoid duplicates in the generated output.
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+      - duplicate
+      - invalid
+      - wontfix
+    authors:
+      - dependabot
+      - github-actions
+
+  categories:
+    - title: ⚠️ Breaking Changes
+      labels:
+        - breaking-change
+        - breaking
+
+    - title: ✨ Features
+      labels:
+        - feature
+        - enhancement
+
+    - title: 🐛 Fixes
+      labels:
+        - bug
+        - fix
+
+    - title: 🔒 Security
+      labels:
+        - security
+
+    - title: ⚡ Performance
+      labels:
+        - performance
+
+    - title: 📚 Documentation
+      labels:
+        - documentation
+        - docs
+
+    - title: ⬆️ Dependencies
+      labels:
+        - dependencies
+
+    - title: 🧹 Maintenance
+      labels:
+        - refactor
+        - maintenance
+        - chore
+        - ci
+        - build
+
+    - title: Other Changes
+      labels:
+        - "*"

@@ -1,0 +1,90 @@
+name: Feature Request
+description: Propose a new capability or a change in behaviour for AI Journal.
+title: "feat: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening this, check [`docs/PLAN.md`](https://github.com/muhammadsami987123/ai-journal-platform/blob/main/docs/PLAN.md)
+        and [`docs/REQUIREMENTS.md`](https://github.com/muhammadsami987123/ai-journal-platform/blob/main/docs/REQUIREMENTS.md).
+        If the feature is already specified, the useful contribution is a correction to that spec — open an
+        **General improvement** issue instead.
+
+        This project deliberately keeps scope small. A request may be declined because it is out of scope,
+        not because it is a bad idea.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the user's difficulty, not the solution you have in mind.
+      placeholder: "When I backfill an entry for last week, I cannot tell which days already have a draft."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: What should happen? Be concrete about the interaction, not the implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What do you do today instead? Why is that not good enough?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Journal writing (editor, story, questions)
+        - Calendar and history
+        - Mood tracking and insights
+        - AI structuring and reflections
+        - Voice journaling
+        - Authentication, profile and settings
+        - Design system and accessibility
+        - Platform, architecture or developer experience
+        - Documentation
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Estimated size
+      description: Your best guess. We will re-estimate.
+      options:
+        - Small — one surface, no schema change
+        - Medium — new component or endpoint, maybe a migration
+        - Large — new module, schema change, or cross-cutting
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Who benefits and how often?
+      description: Helps us prioritise. "Everyone, daily" and "me, occasionally" are both valid answers.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and discussions and did not find this already proposed.
+          required: true
+        - label: This fits the project's stated scope, or I explain above why the scope should change.
+          required: true
+        - label: I understand this project is source-available, not open source, and contributions are relicensed under its terms.
+          required: true

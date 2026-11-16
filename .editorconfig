@@ -1,0 +1,31 @@
+# EditorConfig — https://editorconfig.org
+# Consistent whitespace across editors so reviews show real changes, not formatting noise.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.md]
+# Trailing double-space is a meaningful Markdown line break; leave it alone.
+trim_trailing_whitespace = false
+indent_size = 2
+
+[*.{ts,tsx,js,jsx,mjs,cjs,json,jsonc,yml,yaml,css,scss,html}]
+indent_size = 2
+
+[*.{py,sh}]
+indent_size = 4
+
+[*.{bat,cmd}]
+end_of_line = crlf
+
+[*.ps1]
+end_of_line = crlf
+
+[Makefile]
+indent_style = tab

@@ -1,0 +1,102 @@
+name: Bug Report
+description: Report something that is broken, incorrect or misleading in AI Journal.
+title: "bug: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this.
+
+        **Before you continue:**
+        - Search [existing issues](https://github.com/muhammadsami987123/ai-journal-platform/issues) first.
+        - Do **not** report security vulnerabilities here — see [SECURITY.md](https://github.com/muhammadsami987123/ai-journal-platform/blob/main/SECURITY.md).
+        - The application is in the **architecture phase**: "it does not run" is expected, because there
+          is no code yet. Issues about the *specification* and the *repository* are what we need right now.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Where does the problem appear?
+      options:
+        - Documentation (docs/, README, CONTRIBUTING, etc.)
+        - Specification is wrong, ambiguous or contradictory
+        - Repository structure or tooling
+        - GitHub templates, workflows or configuration
+        - Application behaviour (from Phase 0 onward)
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What is wrong?
+      description: One or two sentences. Be specific about the file, page or surface.
+      placeholder: "docs/API_DOCUMENTATION.md says entries are paginated by cursor, but docs/DATABASE_SCHEMA.md implies offset pagination."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      placeholder: "Both documents should describe the same pagination strategy."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happens?
+      description: Exact text, error output, or observed behaviour. Quote the relevant lines.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: For documentation issues, a link and a quoted line is enough.
+      placeholder: |
+        1. Open docs/API_DOCUMENTATION.md
+        2. Scroll to GET /api/v1/journals
+        3. Compare with docs/DATABASE_SCHEMA.md §entries
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Fill in what applies. Skip this entirely for documentation-only issues.
+      value: |
+        - OS:
+        - Node version:
+        - pnpm version:
+        - Browser and version:
+        - Commit SHA:
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or output
+      description: Truncated, with secrets removed. Never paste journal entries, transcripts, cookies or keys.
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: This is not a security vulnerability (those go to SECURITY.md).
+          required: true
+        - label: I removed secrets, credentials and real journal content from everything above.
+          required: true

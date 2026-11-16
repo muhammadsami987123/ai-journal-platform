@@ -1,0 +1,96 @@
+name: General Improvement
+description: Suggest a refactor, documentation fix, ergonomics change or process improvement.
+title: "improvement: "
+labels: ["improvement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for anything that is **not** a bug and **not** a new product capability: unclear
+        documentation, awkward developer experience, a structure that will not scale, a convention that
+        needs changing.
+
+        Keep it to one concern per issue.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of improvement
+      options:
+        - Documentation clarity or accuracy
+        - Specification quality (ambiguity, missing edge case)
+        - Repository structure or naming
+        - Tooling, scripts or developer setup
+        - CI, workflows or templates
+        - Code quality or refactor (from Phase 0 onward)
+        - Performance
+        - Accessibility
+        - Process, review or release mechanics
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Where is it?
+      description: File, directory or surface. A link is ideal.
+      placeholder: "docs/DEVELOPMENT_GUIDELINES.md §Testing, or CONTRIBUTING.md#quality-gates"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: What is there now?
+      description: Quote the current text, structure or behaviour.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested
+    attributes:
+      label: What should it be instead?
+      description: Show the improved version if you can. Concrete wording beats a description of wording.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why does this matter?
+      description: What goes wrong for a reader, contributor or future maintainer if it stays as it is?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Effort
+      options:
+        - Trivial — a few lines
+        - Small — one file
+        - Medium — several files or a small refactor
+        - Large — cross-cutting change
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: breaking
+    attributes:
+      label: Does this change documented behaviour or a public contract?
+      description: If yes, describe the impact and whether a migration or changelog `Changed` entry is needed.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and did not find this already proposed.
+          required: true
+        - label: This issue describes a single concern.
+          required: true
+        - label: I am willing to open a pull request for this, if the approach is agreed.
+          required: false

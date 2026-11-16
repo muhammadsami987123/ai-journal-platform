@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions and ideas
+    url: https://github.com/muhammadsami987123/ai-journal-platform/discussions
+    about: Ask a question, discuss the specification, or float an idea before it becomes an issue.
+  - name: 🔒 Report a security vulnerability
+    url: https://github.com/muhammadsami987123/ai-journal-platform/security/advisories/new
+    about: Never report vulnerabilities in a public issue. Private reporting is preferred.
+  - name: 📖 Read the documentation
+    url: https://github.com/muhammadsami987123/ai-journal-platform/blob/main/docs/README.md
+    about: The specification is the single source of truth for what the project should do.
+  - name: 🤝 Contributing guide
+    url: https://github.com/muhammadsami987123/ai-journal-platform/blob/main/CONTRIBUTING.md
+    about: Conventions, commit format, quality gates and the review process.

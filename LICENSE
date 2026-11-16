@@ -1,0 +1,244 @@
+# AI Journal Source-Available License 1.0
+
+**SPDX-License-Identifier:** `LicenseRef-AIJournal-SAL-1.0`
+
+**Copyright © 2026 Muhammad Sami Asghar Mughal ("Muhammad Sami"). All rights reserved.**
+
+---
+
+> **This is not an open-source license.** It is a **source-available** license. It grants the
+> rights listed in Section 2 and is conditioned on, and limited by, Sections 3 and 4. It does
+> not grant the rights an OSI-approved open-source license would grant, and it is not intended
+> to. "AI Journal" and any associated names, logos and marks are not licensed under this
+> document (Section 6).
+
+---
+
+## 1. Definitions
+
+**1.1 "Software"** means the AI Journal project source code, documentation, configuration,
+schema, designs and any other material distributed in this repository by the Copyright Holder,
+including all modifications and derivative works of that material.
+
+**1.2 "Copyright Holder"** means Muhammad Sami Asghar Mughal, the original author and owner of
+the Software.
+
+**1.3 "You"** means the individual or legal entity exercising rights under this License.
+
+**1.4 "Personal Use"** means use by You, for Your own private, non-commercial purposes,
+including learning, study, experimentation, personal journaling, and running the Software on
+hardware You control or for Your own private use.
+
+**1.5 "Commercial Use"** means any use that is intended for or directed toward commercial
+advantage or monetary compensation. This includes, without limitation: selling, licensing,
+renting, leasing or sublicensing the Software; offering the Software or any derivative as a
+paid product, paid service, subscription or hosted/managed service; bundling the Software into
+a commercial offering; using it to provide services to customers for a fee; or use by or for a
+for-profit entity in the operation of its business.
+
+**1.6 "Derivative Work"** means any work based on or incorporating the Software, including
+modified versions, forks, translations, ports, and works that combine the Software with other
+material.
+
+**1.7 "Attribution Notice"** means the copyright notice in this file together with the statement
+that the Software originates from the AI Journal project by Muhammad Sami, and a link to the
+original repository.
+
+**1.8 "Project Marks"** means the names "AI Journal", "AI Journal Platform", the project logo,
+and any other trade name, trademark, service mark or branding used by the Copyright Holder in
+connection with the Software.
+
+**1.9 "Original Repository"** means the public repository hosted at
+`https://github.com/muhammadsami987123/ai-journal-platform` (or its successor location
+designated by the Copyright Holder).
+
+---
+
+## 2. Grant of Permission
+
+Subject to Your full compliance with this License, the Copyright Holder grants You a worldwide,
+royalty-free, non-exclusive, non-transferable, revocable license to:
+
+1. **Read and study** the Software, including its source code and documentation.
+2. **Use** the Software for Personal Use.
+3. **Run** the Software locally or on infrastructure You control, for Personal Use.
+4. **Modify** the Software and create Derivative Works for Personal Use.
+5. **Improve** existing features and add new ones for Personal Use.
+6. **Create Your own modified local versions** of the Software for Personal Use.
+7. **Contribute** improvements, fixes and features back to the Original Repository, in
+   accordance with Section 5.
+
+**No other rights are granted.** All rights not expressly granted in this Section are reserved
+by the Copyright Holder. In particular, **redistribution is not granted** — see Section 4.2.
+
+---
+
+## 3. Conditions
+
+You must comply with all of the following at all times:
+
+**3.1 Retain notices.** You must keep this License file, the copyright notice, and all
+Attribution Notices intact and unmodified in every copy or Derivative Work You create, including
+in the user interface, "About" screens, documentation and package metadata where the Software
+identifies its origin.
+
+**3.2 Preserve attribution.** Any Derivative Work must clearly and prominently state:
+
+> "Based on AI Journal (https://github.com/muhammadsami987123/ai-journal-platform),
+> Copyright © 2026 Muhammad Sami Asghar Mughal. Modified by [Your name] on [date]."
+
+**3.3 State changes.** You must document what You changed, when, and by whom, in a location a
+reasonable person would find (for example a `CHANGELOG` or `NOTICE` file).
+
+**3.4 Do not misrepresent the Software as unmodified** when it has been modified.
+
+**3.5 No additional restrictions.** You may not impose terms on any copy of the Software that
+conflict with, or purport to replace, this License.
+
+---
+
+## 4. Prohibited Uses
+
+You may **not**, and may not permit any third party to:
+
+**4.1 Commercial Use.** Use the Software or any Derivative Work for Commercial Use, as defined
+in Section 1.5.
+
+**4.2 Redistribute.** Publish, distribute, share, upload, mirror, sublicense, sell, rent or
+otherwise make the Software or any Derivative Work available to any third party. Personal,
+local, non-published modifications are permitted; publishing or distributing them is not. The
+only permitted outward transfer is a contribution made to the Original Repository under
+Section 5.
+
+**4.3 Claim authorship.** Represent Yourself as the creator, author or original owner of the
+Software, or of any substantial part of it.
+
+**4.4 Remove or alter attribution.** Delete, obscure, alter or circumvent the copyright notice,
+the Attribution Notice, this License file, or any author credit displayed by the Software.
+
+**4.5 Rebrand and claim ownership.** Rename, rebrand, re-skin or re-present the Software, or any
+Derivative Work, as Your own original product, or as a product not derived from AI Journal.
+
+**4.6 Use the Project Marks.** Use the Project Marks, or any confusingly similar name or logo,
+to identify Your version, to imply endorsement, sponsorship or affiliation, or in any way that
+suggests the Copyright Holder produced or approved Your Derivative Work.
+
+**4.7 Remove licensing or provenance metadata** embedded in the Software.
+
+**4.8 Unlawful use.** Use the Software in violation of applicable law, or to build a product
+whose principal purpose is to harm others.
+
+---
+
+## 5. Contributions
+
+**5.1** By submitting a contribution (pull request, patch, issue content, documentation, design
+or any other material) to the Original Repository, You grant the Copyright Holder a perpetual,
+worldwide, royalty-free, irrevocable, sublicensable license to use, reproduce, modify, adapt,
+publish, distribute and relicense that contribution as part of the Software, under this License
+or any later version of it.
+
+**5.2** You confirm that You have the right to grant that license, and that Your contribution is
+Your original work or is otherwise properly licensed for this purpose.
+
+**5.3** Contributions do not grant You any ownership or co-authorship of the project as a whole,
+nor any right to the Project Marks.
+
+---
+
+## 6. No Trademark or Branding License
+
+This License does not grant any right to the Project Marks. No license, express or implied, is
+granted by estoppel or otherwise with respect to any trade name, trademark, service mark, logo
+or branding of the Copyright Holder. All goodwill in the Project Marks remains with the
+Copyright Holder.
+
+---
+
+## 7. Termination
+
+**7.1** This License and all rights granted under it terminate automatically and immediately if
+You breach any term of Sections 3, 4 or 5.
+
+**7.2** On termination You must stop all use of the Software and delete all copies and Derivative
+Works in Your possession or control.
+
+**7.3** Sections 4, 6, 7, 8, 9 and 10 survive termination.
+
+**7.4** The Copyright Holder may additionally pursue any remedy available under copyright,
+trademark, contract or other applicable law.
+
+---
+
+## 8. No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+TITLE AND NON-INFRINGEMENT. THE COPYRIGHT HOLDER DOES NOT WARRANT THAT THE SOFTWARE WILL BE
+ERROR-FREE, SECURE, OR THAT IT WILL MEET YOUR REQUIREMENTS. YOU USE THE SOFTWARE AT YOUR OWN
+RISK.
+
+---
+
+## 9. Limitation of Liability
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. THIS INCLUDES, WITHOUT LIMITATION,
+LOSS OF DATA, LOSS OF PROFITS, BUSINESS INTERRUPTION, OR ANY INDIRECT, INCIDENTAL, SPECIAL,
+CONSEQUENTIAL OR PUNITIVE DAMAGES.
+
+**Note for users:** AI Journal is designed to store personal journal content. You are solely
+responsible for your own deployment's security, backups and regulatory compliance.
+
+---
+
+## 10. General
+
+**10.1 Acceptance.** By reading, copying, running, modifying or contributing to the Software,
+You accept this License in full. If You do not accept it, You must not use the Software.
+
+**10.2 Entire agreement.** This License is the complete agreement between You and the Copyright
+Holder regarding the Software and supersedes any prior understanding on the same subject.
+
+**10.3 Severability.** If any provision is held unenforceable, the remainder stays in effect and
+the unenforceable provision is limited to the minimum extent necessary.
+
+**10.4 No waiver.** Failure to enforce a provision is not a waiver of the right to enforce it
+later.
+
+**10.5 Governing law.** This License is governed by the laws applicable at the Copyright
+Holder's principal place of residence, without regard to conflict-of-law rules. Nothing here
+limits mandatory consumer protections available to You under Your local law.
+
+**10.6 Language.** This License is written in English. Translations are for convenience only; the
+English text controls.
+
+---
+
+## 11. Commercial Licensing
+
+Commercial use, redistribution and branding rights are **not** granted by this License and may be
+available under a separate written agreement with the Copyright Holder. To enquire, open a
+discussion in the Original Repository or contact the Copyright Holder through the channels listed
+in `README.md`.
+
+---
+
+## 12. Plain-Language Summary (non-binding)
+
+This summary is provided for understanding only. **Section 1–11 control.**
+
+| You MAY | You MAY NOT |
+|---|---|
+| Read and study the code | Use it commercially or to make money |
+| Run it for your own personal journaling | Publish, share or redistribute it |
+| Modify it for your own use | Claim you wrote it |
+| Build your own private local version | Remove or hide the copyright and attribution |
+| Learn from how it works | Rebrand it and present it as your own product |
+| Submit improvements back to the project | Use the AI Journal name or logo |
+
+---
+
+*This license was drafted for this project and is not legal advice. If you intend to rely on it
+commercially or to enforce it, have it reviewed by a qualified lawyer in your jurisdiction.*
