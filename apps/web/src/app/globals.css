@@ -1,0 +1,195 @@
+@import "tailwindcss";
+@import "@journal/config/tailwind/theme.css";
+
+/*
+ * App-wide base. Tokens come from packages/config/tailwind/theme.css — no
+ * component may hardcode a hex value; everything resolves through a token.
+ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* Date inputs keep the same surface language as the rest of the form. */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.55;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  /* Serif is reserved for the act of writing, never for chrome. */
+  .prose-journal {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: var(--color-ink);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .urdu {
+    font-family: var(--font-urdu);
+    line-height: 2.15;
+  }
+
+  .devanagari {
+    font-family: var(--font-devanagari);
+    line-height: 1.9;
+  }
+
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-strong) transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background: var(--color-border-strong);
+    border-radius: var(--radius-full);
+  }
+
+  .skeleton-shimmer {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-subtle) 0%,
+      var(--color-sunken) 45%,
+      var(--color-subtle) 90%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 180% 0;
+    }
+    to {
+      background-position: -60% 0;
+    }
+  }
+
+  .surface-grid {
+    background-image:
+      linear-gradient(to right, rgba(31, 27, 22, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(31, 27, 22, 0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .hero-3d {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+  }
+
+  .mood-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--mood-color, var(--color-ink-muted));
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Accent presets (settings → theme accent). Only the accent family changes;
+ * surfaces, ink and mood colours stay fixed so the product keeps one identity.
+ * -------------------------------------------------------------------------- */
+[data-accent="terracotta"] {
+  --color-accent: #a94f2a;
+  --color-accent-hover: #8f3f1f;
+  --color-accent-soft: #f7e8df;
+  --color-accent-border: #e8cdbd;
+}
+
+[data-accent="sage"] {
+  --color-accent: #4a735c;
+  --color-accent-hover: #3c5f4b;
+  --color-accent-soft: #e8f0ea;
+  --color-accent-border: #cddfd3;
+}
+
+[data-accent="ink"] {
+  --color-accent: #2c3e50;
+  --color-accent-hover: #1f2c39;
+  --color-accent-soft: #e8ecf0;
+  --color-accent-border: #cbd4dc;
+}
+
+/* --------------------------------------------------------------------------
+ * Reduced motion. Two sources: the OS setting, and the in-app preference
+ * (data-reduced-motion on the app shell). Neither removes information —
+ * opacity changes still resolve, they simply stop moving.
+ * -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-reduced-motion="true"] *,
+[data-reduced-motion="true"] *::before,
+[data-reduced-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Landing-only: the illustration of a live recording. Transform-only, so the
+   global reduced-motion rules neutralise it without hiding the bars. */
+@layer components {
+  .wave-bar {
+    transform-origin: center;
+    animation: landing-wave 1.6s ease-in-out infinite;
+  }
+
+  @keyframes landing-wave {
+    0%,
+    100% {
+      transform: scaleY(0.45);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+}
+

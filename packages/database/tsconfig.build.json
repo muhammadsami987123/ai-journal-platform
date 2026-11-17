@@ -1,0 +1,11 @@
+{
+  "extends": "@journal/config/typescript/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "declaration": true,
+    "declarationMap": true
+  },
+  "include": ["src/**/*.ts", "schema/**/*.ts", "seeds/**/*.ts", "drizzle.config.ts"],
+  "exclude": ["node_modules", "dist", "migrations"]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "ai-journal",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI Journal — intelligent personal diary platform (NestJS API + Next.js web)",
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "pnpm build:packages && turbo run dev --parallel",
+    "dev:api": "pnpm --filter @journal/api dev",
+    "dev:web": "pnpm --filter @journal/web dev",
+    "build": "turbo run build",
+    "build:packages": "pnpm --filter @journal/shared --filter @journal/database build",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:generate": "pnpm --filter @journal/database generate",
+    "db:migrate": "pnpm --filter @journal/database migrate",
+    "db:check": "pnpm --filter @journal/database check",
+    "db:seed": "pnpm --filter @journal/database seed",
+    "clean": "turbo run clean && rimraf node_modules/.cache"
+  },
+  "devDependencies": {
+    "prettier": "3.10.1",
+    "turbo": "2.11.11",
+    "typescript": "6.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@tailwindcss/oxide",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  }
+}

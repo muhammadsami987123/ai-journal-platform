@@ -11,7 +11,7 @@ structured diary you actually want to reread. Private by design, self-hostable, 
 on a modern TypeScript stack.
 
 [![License: Source-Available](https://img.shields.io/badge/license-Source--Available-blue.svg)](LICENSE)
-[![Status: Architecture](https://img.shields.io/badge/status-architecture%20phase-orange.svg)](#-project-status)
+[![Status: In development](https://img.shields.io/badge/status-in%20development-blue.svg)](#-project-status)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![NestJS](https://img.shields.io/badge/NestJS-12.5-ea2845.svg)](https://nestjs.com)
 [![Next.js](https://img.shields.io/badge/Next.js-16.4-000000.svg)](https://nextjs.org)
@@ -24,13 +24,15 @@ on a modern TypeScript stack.
 
 > ### 📌 Project Status
 >
-> **This repository is in the architecture and planning phase.** There is **no application code
-> yet** — no installable build, no running demo, no screenshots. What exists today is a complete,
-> reviewed specification: product plan, requirements, architecture, database schema, API contract,
-> AI and voice design, a 109-task roadmap, and the repository scaffolding.
+> **Core application code is implemented and locally runnable (monorepo: `apps/api` + `apps/web`).**
+> The main surfaces (auth, dashboard, journal editor, calendar, history/search, insights, voice UI,
+> settings/profile, marketing landing) have been smoke-tested against a real Neon-backed API on
+> **2026-11-17** — see [`reports/testing/2026-11-17-web-ui-smoke-verification.md`](reports/testing/2026-11-17-web-ui-smoke-verification.md)
+> and the screenshots below.
 >
-> Everything marked **Planned** below is specified and scheduled, **not implemented**. We will not
-> claim otherwise until it runs.
+> **Not yet complete:** no public production deployment, provider-backed AI/STT runtime E2E depends on
+> configured keys, and full release-gate QA (two-account isolation matrix, formal a11y/perf/failure
+> passes) remains. Items marked **Planned** below are still scheduled, not shipped.
 
 ---
 
@@ -167,31 +169,33 @@ them retrievable, and per-user isolation with self-hosting keeps them private.
 
 ## 🖼 Screenshots & Previews
 
-**No screenshots exist yet.** The interface has not been built, and generated mockups would
-misrepresent the project. This section will be filled with real captures as each surface lands.
+Real local captures from the smoke-tested build (2026-11-17, test account data). More in [`docs/assets/screenshots/`](docs/assets/screenshots/).
 
-| Surface | Preview | Available |
-|---|---|---|
-| Landing page | *— pending implementation* | Phase 3 |
-| Dashboard | *— pending implementation* | Phase 5 |
-| Interactive calendar | *— pending implementation* | Phase 6 |
-| Journal editor | *— pending implementation* | Phase 7 |
-| Voice recording UI | *— pending implementation* | Phase 9 |
-| AI review screen | *— pending implementation* | Phase 8 |
-| Insights & charts | *— pending implementation* | Phase 11 |
+| Surface | Preview |
+|---|---|
+| Landing page | ![Landing page](docs/assets/screenshots/landing.png) |
+| Dashboard | ![Dashboard](docs/assets/screenshots/dashboard.png) |
+| Journal editor | ![Journal editor](docs/assets/screenshots/editor-empty.png) |
+| Calendar | ![Calendar](docs/assets/screenshots/calendar.png) |
+| Journal history | ![Journal history](docs/assets/screenshots/journal.png) |
+| Voice journal | ![Voice journal](docs/assets/screenshots/voice.png) |
+| Insights | ![Insights](docs/assets/screenshots/insights.png) |
+| Settings | ![Settings](docs/assets/screenshots/settings.png) |
+| Profile | ![Profile](docs/assets/screenshots/profile.png) |
+| Mobile (dashboard) | ![Mobile dashboard](docs/assets/screenshots/mobile-dashboard.png) |
+| Mobile (landing) | ![Mobile landing](docs/assets/screenshots/mobile-landing.png) |
 
-Until then, the design and interaction system is specified in
-[`docs/UI_UX_GUIDELINES.md`](docs/UI_UX_GUIDELINES.md).
+Design and interaction system: [`docs/UI_UX_GUIDELINES.md`](docs/UI_UX_GUIDELINES.md).
 
 ---
 
 ## 🎬 Demo
 
-**There is no live demo.** Nothing has been deployed, and this README will not claim a deployment
-status it does not have.
+**No hosted production demo yet** (Phase 15 deployment pending).
 
-When Phase 15 (deployment) is complete, this section will link a hosted instance and a 60-second
-walkthrough. Local usage instructions will appear in [Usage](#-usage) at the same time.
+You can run the app locally (web + API behind one origin/proxy) and exercise the flows shown in the
+screenshots above. Smoke-test evidence and known gaps: [`reports/testing/2026-11-17-web-ui-smoke-verification.md`](reports/testing/2026-11-17-web-ui-smoke-verification.md).
+AI structuring and server STT fallback require provider keys to be configured.
 
 ---
 
@@ -321,11 +325,9 @@ code lands.
 
 ## 📦 Installation
 
-> ⚠️ **Not available yet.** There is no `package.json`, no lockfile and no build. The commands
-> below are the **planned** workflow and will start working at Phase 0. They are listed now so
-> contributors can see the intended shape; they are not runnable today.
+The monorepo is scaffolded and buildable locally.
 
-**Prerequisites (planned)**
+**Prerequisites**
 
 | Requirement | Version |
 |---|---|
@@ -334,31 +336,32 @@ code lands.
 | PostgreSQL | Neon account, or any Postgres 16+ |
 | Git | ≥ 2.40 |
 
-**Planned steps**
+**Steps (local development)**
 
 ```bash
 # 1. Clone
 git clone https://github.com/muhammadsami987123/ai-journal-platform.git
 cd ai-journal-platform
 
-# 2. Install workspace dependencies (one lockfile at root)
+# 2. Install workspace dependencies
 pnpm install
 
 # 3. Configure environment
 cp .env.example .env
-# then edit .env — see Environment Variables below
+# edit .env — see Environment Variables below (Neon, Better Auth, LLM/STT as needed)
 
-# 4. Apply database migrations
+# 4. Apply database migrations / seed (as configured in your environment)
 pnpm db:migrate
-
-# 5. Seed development data (12 guided questions)
 pnpm db:seed
 
-# 6. Start both apps
-pnpm dev
+# 5. Start apps
+# API (example):    pnpm --filter @journal/api dev   (or build + start)
+# Web (proxied):    set API_INTERNAL_URL=http://localhost:3001 && pnpm --filter @journal/web dev
 #   web  → http://localhost:3000
 #   api  → http://localhost:3001
 ```
+
+> Exact scripts/ports depend on your local env; confirm with each app's `package.json` and `.env`. A single-origin proxy is required for cookie-based auth.
 
 ---
 
@@ -399,7 +402,7 @@ All configuration is environment-based. **No secret is ever committed.** The aut
 
 ## 🛠 Development Setup
 
-> ⚠️ Planned — becomes available at Phase 0 (monorepo foundation).
+Common workspace/app commands (verify in root and app `package.json`):
 
 | Command | Purpose |
 |---|---|

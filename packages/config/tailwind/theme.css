@@ -1,0 +1,87 @@
+/*
+ * AI Journal — design tokens (single source of truth).
+ * Consumed by apps/web via `@import "@journal/config/tailwind/theme.css";`
+ * Values are CSS custom properties, exposed to Tailwind v4 through @theme.
+ */
+
+@theme {
+  /* ---- Surfaces -------------------------------------------------------- */
+  --color-canvas: #faf8f5;
+  --color-surface: #ffffff;
+  --color-subtle: #f3efe9;
+  --color-sunken: #efe9e1;
+  --color-border: #e6dfd5;
+  --color-border-strong: #d5cabc;
+
+  /* ---- Text ------------------------------------------------------------ */
+  --color-ink: #1f1b16;
+  --color-ink-soft: #57514a;
+  --color-ink-muted: #857c72;
+  --color-ink-inverse: #fffdfa;
+
+  /* ---- Accent (single) ------------------------------------------------- */
+  --color-accent: #a94f2a;
+  --color-accent-hover: #8f3f1f;
+  --color-accent-soft: #f7e8df;
+  --color-accent-border: #e8cdbd;
+
+  /* ---- Semantic -------------------------------------------------------- */
+  --color-success: #2f7a5a;
+  --color-success-soft: #e5f2ec;
+  --color-warning: #a06a12;
+  --color-warning-soft: #fbf0da;
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbe9e7;
+  --color-info: #3a5f8a;
+  --color-info-soft: #e8eef6;
+
+  /* ---- Mood palette (semantic, never reused as UI accent) -------------- */
+  --color-mood-happy: #d99a1f;
+  --color-mood-excited: #d9622b;
+  --color-mood-peaceful: #3f8f86;
+  --color-mood-motivated: #4f8a3d;
+  --color-mood-normal: #7c7469;
+  --color-mood-tired: #a08a63;
+  --color-mood-stressed: #b26a72;
+  --color-mood-sad: #5f7590;
+  --color-mood-frustrated: #a86a2b;
+  --color-mood-anxious: #8a76a8;
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-lora), "Iowan Old Style", Georgia, serif;
+  --font-urdu: var(--font-urdu), "Noto Nastaliq Urdu", serif;
+  --font-devanagari: var(--font-devanagari), "Noto Sans Devanagari", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", monospace;
+
+  /* ---- Radius ---------------------------------------------------------- */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* ---- Elevation (three levels only) ----------------------------------- */
+  --shadow-raised: 0 1px 2px rgba(31, 27, 22, 0.04), 0 10px 30px -18px rgba(31, 27, 22, 0.28);
+  --shadow-overlay: 0 2px 6px rgba(31, 27, 22, 0.06), 0 24px 60px -24px rgba(31, 27, 22, 0.32);
+  --shadow-focus: 0 0 0 3px rgba(169, 79, 42, 0.22);
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-enter: 240ms;
+  --duration-exit: 170ms;
+}
+
+/* Reduced motion: transforms and continuous animation are removed globally.
+   Opacity transitions remain so state changes stay perceivable. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
